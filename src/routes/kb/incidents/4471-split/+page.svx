@@ -25,18 +25,29 @@ Each problem needs its own ticket.
 
 <ProblemTable ticket={4471} />
 
+## After the engineering update
+
+Engineering closed #4471 on 5 October.
+The parser problem is fixed, and its ticket is closed as completed.
+The hint problem is closed as won't fix because the booking-v3 form is retired.
+The parser fix did not cover the hint problem.
+The one-day-move ticket stays open because the update does not mention it.
+Its cause is not confirmed.
+
 ## parser
 
 The reporter sees a booking with the day and the month swapped.
 The report comes from a tenant whose locale writes the day first, through the app, email, or a form that hints the day first.
-The cause is known: the shared parser reads every date month first.
+The cause was that the shared parser read every date month first.
+Engineering fixed the parser to read day-first dates for EU locales.
 
 ## hint
 
 The reporter sees a swapped date on a booking made through the booking-v3 form.
 The report comes through the form channel from a day-first tenant that runs booking-v3.
 The cause is known: the form prints an MM/DD/YYYY hint, people type the month first, and the form reads the day first.
-A parser fix does not change this.
+The parser fix did not change this.
+The booking-v3 form is retired, so engineering will not fix the hint.
 
 ## one-day-move
 

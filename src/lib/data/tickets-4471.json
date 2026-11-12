@@ -1,1 +1,7 @@
-{ "repo": "Dev43/kb-4471", "parser": 1, "hint": 2, "one-day-move": 3 }
+{
+  "repo": "Dev43/kb-4471",
+  "update": "2026-10-05",
+  "parser": { "issue": 1, "state": "fixed", "note": "fix(dates): parse dd/mm for eu locales" },
+  "hint": { "issue": 2, "state": "won't fix", "note": "booking-v3 form retired" },
+  "one-day-move": { "issue": 3, "state": "open", "note": "not in the engineering update" }
+}

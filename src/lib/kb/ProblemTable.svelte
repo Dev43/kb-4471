@@ -13,7 +13,8 @@
   const merged = $derived(unique.filter((r) => r.mergedInto === ticket));
   const groups = $derived(groupByProblem(merged, tenantOf, notes.oneDayMove));
   const sum = $derived(groups.reduce((n, g) => n + g.reports.length, 0));
-  const issue = (p: Problem): number | null => (tickets.repo && (tickets as Record<string, number | null>)[p]) || null;
+  type Ticket = { issue: number; state: string; note: string };
+  const ticketOf = (p: Problem): Ticket | null => (tickets as Record<string, unknown>)[p] as Ticket | undefined ?? null;
 </script>
 
 <p class="sum">
@@ -25,19 +26,20 @@
 
 <table>
   <thead>
-    <tr><th>problem</th><th>reports</th><th>tenants</th><th>seen</th><th>ticket</th></tr>
+    <tr><th>problem</th><th>reports</th><th>tenants</th><th>seen</th><th>ticket</th><th>state</th></tr>
   </thead>
   <tbody>
     {#each groups as g (g.problem)}
-      {@const n = issue(g.problem)}
+      {@const t = ticketOf(g.problem)}
       <tr>
         <td><code>{g.problem}</code></td>
         <td>{g.reports.length}</td>
         <td>{g.tenants}</td>
         <td>{g.firstSeen} → {g.lastSeen}</td>
         <td>
-          {#if n}<a href="https://github.com/{tickets.repo}/issues/{n}">#{n}</a>{:else}<span class="todo">not filed yet</span>{/if}
+          {#if t}<a href="https://github.com/{tickets.repo}/issues/{t.issue}">#{t.issue}</a>{:else}<span class="todo">not filed yet</span>{/if}
         </td>
+        <td>{#if t}<strong>{t.state}</strong> · {t.note}{/if}</td>
       </tr>
     {/each}
   </tbody>
