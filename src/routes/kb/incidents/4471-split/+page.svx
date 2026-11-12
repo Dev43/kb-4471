@@ -1,0 +1,63 @@
+---
+layout: runbook
+title: '#4471 · three problems in one ticket'
+owner: Dev43
+status: proposed
+reviewed: 2026-11-12
+signature: 'v1.eyJzdWIiOiIxMzM4IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTQ0Nzk5OTgsImV4cCI6MTc5NDU2NjM5OH0.3iaX6xFgKmPVlLZEJLNeSiRaPI5UbVZ87DnGiS1JmCU'
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+## What the desk's page says
+
+The [desk page](/kb/incidents/4471) treats #4471 as one issue.
+Its status is `known`, and it names one fix: the parser.
+
+## What the reports show
+
+The reports describe three problems.
+Each problem needs its own ticket.
+
+<ProblemTable ticket={4471} />
+
+## parser
+
+The reporter sees a booking with the day and the month swapped.
+The report comes from a tenant whose locale writes the day first, through the app, email, or a form that hints the day first.
+The cause is known: the shared parser reads every date month first.
+
+## hint
+
+The reporter sees a swapped date on a booking made through the booking-v3 form.
+The report comes through the form channel from a day-first tenant that runs booking-v3.
+The cause is known: the form prints an MM/DD/YYYY hint, people type the month first, and the form reads the day first.
+A parser fix does not change this.
+
+## one-day-move
+
+The reporter sees a date that moves by one day.
+The month stays the same.
+The reports mention two cities, say the problem happens only in June, or describe an invite that arrives before the booking.
+These signs point to a time zone problem.
+The cause is not confirmed.
+
+## How the count works
+
+A report that appears twice in the export has one id, and we count it once.
+The cause comes from the tenant's locale and booking form.
+The intake tag is a guess from the reporter's browser, and we do not use it.
+The one-day-move reports are the desk's own list in `desk-notes.json`.
+
+## What the desk's table shows
+
+The desk's table files every report under `parser` or `hint`.
+It counts the one-day-move reports inside `parser`.
+
+<CauseTable ticket={4471} />
+
+<RenderStamp {signature} />

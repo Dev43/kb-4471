@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "check": "node src/lib/kb/problems.check.ts"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^3.0.11",
